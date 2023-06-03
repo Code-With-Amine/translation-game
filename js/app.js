@@ -18,12 +18,18 @@ $(document).ready(function(){
         let TargetLang = $('#TargetLang'); // retrive the select list for the source language
 
         let translatedWords = words.translations // extract the arry which exsists in the object of words
-
+        let codeToLanguage = {
+          'en':'English',
+          'ar':'Arabic',
+          'fr':'French',
+          'es':'Spanish'
+        } // object to convert the language code to the language Name
         let isRepeated = 0; // variable to store repeated words
 
         for(let i of translatedWords){ // loop for each source lange and add it to the select list
             if(isRepeated !== i.sourceLanguage){ // check if that lang is already inserted or not
-                SourceLang.append(`<option value="${i.sourceLanguage}">${i.sourceLanguage}</option>`);
+              const langName = i.sourceLanguage
+                SourceLang.append(`<option value="${i.sourceLanguage}">${codeToLanguage[langName]}</option>`);
                 isRepeated = i.sourceLanguage
             }
         }
@@ -31,7 +37,8 @@ $(document).ready(function(){
         // set the langauges into the target language select list
         for(let i of translatedWords){
             if(!isRepeated.includes(i.targetLanguage)){ // check if that lang is already inserted or not
-                TargetLang.append(`<option value="${i.targetLanguage}">${i.targetLanguage}</option>`);
+              const langName = i.targetLanguage
+                TargetLang.append(`<option value="${i.targetLanguage}">${codeToLanguage[langName]}</option>`);
                 isRepeated.push(i.targetLanguage)
             }
         }
