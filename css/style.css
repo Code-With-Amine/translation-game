@@ -109,6 +109,8 @@ select{
     padding: 14px 26px;
     background-color: #fff;
     cursor: pointer;
+    color: black;
+    font-weight: bold;
 }
 
 .showSourceLangWord{
@@ -141,6 +143,7 @@ select{
         gap: 0;
         width: 50%;
         background-color: #fff;
+        align-items: center;
 
     }
 
@@ -177,4 +180,49 @@ button:disabled{
     opacity: 0.5;
     cursor: none;
     pointer-events: none;
+}
+
+.Styleresult{
+    background-color: #fff;
+    padding: 22px;
+    text-align: center;
+}
+
+.transparent-background{
+    background-color: transparent; 
+    width: 80%;
+}
+
+/* style the model */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    text-align: center;
+  }
+
+  .shadow{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+.icon{
+    width: 80px!important;
+    height: 30px!important;
+    padding: 0px 12px;
+    margin-bottom: 0;
 }

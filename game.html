@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/d83f7e2869.js" crossorigin="anonymous"></script>
     <script src="js/app.js" type="module" defer></script>
     <title>Translation Game - ABOUT Select Source languages</title>
     <style>
@@ -19,10 +20,10 @@
 </head>
 <body>
 <div class="menu">
-    <button class="gameNav radius-2">Home</button>
+    <a href="index.html" class="gameNav radius-2">Home</a>
     <button class="gameNav radius-2" id="timer">1:00</button>
-    <button class="gameNav radius-2">Restart</button>
-    <button class="gameNav radius-2">Result</button>
+    <button onclick="return location.reload()" class="gameNav radius-2">Restart</button>
+    <button type="button" id="result"  class="gameNav radius-2">Result</button>
 </div>
 
 <div class="showSourceLangWord">
@@ -38,13 +39,30 @@
 </div>
 
 <div>
-    <p id="result-state"></p>
+    <section class="placeholder transparent-background showResult">
+        <img src="images/hand.png" alt="">
+        <p id="result-state" class="radius-1 Styleresult"></p>
+    </section>
+
+    <section class="placeholder transparent-background showHint">
+        <img src="images/lightbulb.png" alt="">
+        <p class="Styleresult radius-1"></p>
+    </section>
 </div>
 
 <div class="grid-container-2"> 
     <button class="checkAnswer radius-2" id="checkAnser">CHECK</button>
     <button class="checkAnswer radius-2" id="nextBtn">Next</button>
 </div>
+
+<!-- create a modal -->
+
+<div id="myModal" class="modal radius-1 shadow">
+    <div class="modal-content">
+      <p></p>
+    </div>
+</div>
+
 
 </body>
 </html>
