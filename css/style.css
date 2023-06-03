@@ -166,5 +166,15 @@ input:focus{
     display: inline-block;
     margin-top: 40px;
     background-color: black;
+    font-weight: bold;
     color: #fff;
+    box-shadow: 12px 4px 36px rgb(20, 20, 20);
+}
+
+/* change the style of disabled buttons */
+
+button:disabled{
+    opacity: 0.5;
+    cursor: none;
+    pointer-events: none;
 }
