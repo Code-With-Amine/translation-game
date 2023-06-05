@@ -226,3 +226,13 @@ button:disabled{
     padding: 0px 12px;
     margin-bottom: 0;
 }
+
+.gameNav.btn{
+    background-color: #525252f5;
+    color: white;
+    font-weight: bold;
+}
+.gameNav.btn:hover{
+    opacity: 0.9;
+    background-color: #333;
+}

@@ -20,10 +20,10 @@
 </head>
 <body>
 <div class="menu">
-    <a href="index.html" class="gameNav radius-2">Home</a>
+    <a href="index.html" class="gameNav radius-2 btn shadow">Home</a>
     <button class="gameNav radius-2" id="timer">1:00</button>
-    <button onclick="return location.reload()" class="gameNav radius-2">Restart</button>
-    <button type="button" id="result"  class="gameNav radius-2">Result</button>
+    <button onclick="return location.reload()" class="gameNav radius-2 btn shadow">Restart</button>
+    <button type="button" id="result"  class="gameNav radius-2 btn shadow">Result</button>
 </div>
 
 <div class="showSourceLangWord">
@@ -63,6 +63,10 @@
     </div>
 </div>
 
+<script>
+    $('.showHint').hide()
+    $('.showResult').hide()
+</script>
 
 </body>
 </html>

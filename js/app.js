@@ -1,7 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
 import {getDatabase, ref, push, onValue} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
-$(document).ready(function(){
+import words from './jsonData.json' assert { type: 'json' };
 
+$(document).ready(function(){
         const appSetting = {
                 databaseURL: 'https://translation-game-1eda5-default-rtdb.europe-west1.firebasedatabase.app/'
         } 
@@ -11,9 +12,6 @@ $(document).ready(function(){
         const SourceLanguagesInDatabase = ref(database, "souceLang") // I created a refrence to my databse in firebase called " souceLang "
         const TargetedLanguagesInDatabase = ref(database, "targetedLang") 
 
-
-        const JSONwords = '{"translations":[{"sourceLanguage":"en","targetLanguage":"fr","phrases":{"hello":"bonjour","goodbye":"au revoir","thank you":"merci","cat":"chat","dog":"chien","house":"maison","apple":"pomme","car":"voiture","book":"livre","music":"musique","friend":"ami","sun":"soleil","tree":"arbre","flower":"fleur","love":"amour","food":"nourriture"}},{"sourceLanguage":"en","targetLanguage":"es","phrases":{"hello":"hola","goodbye":"adiós","thank you":"gracias","cat":"gato","dog":"perro","house":"casa","apple":"manzana","car":"coche","book":"libro","music":"música","friend":"amigo","sun":"sol","tree":"árbol","flower":"flor","love":"amor","food":"comida"}},{"sourceLanguage":"en","targetLanguage":"ar","phrases":{"hello":"مرحبا","goodbye":"وداعا","thank you":"شكرا","cat":"قطة","dog":"كلب","house":"منزل","apple":"تفاحة","car":"سيارة","book":"كتاب","music":"موسيقى","friend":"صديق","sun":"شمس","tree":"شجرة","flower":"زهرة","love":"حب","food":"طعام"}},{"sourceLanguage":"fr","targetLanguage":"en","phrases":{"bonjour":"hello","au revoir":"goodbye","merci":"thank you","chat":"cat","chien":"dog","maison":"house","pomme":"apple","voiture":"car","livre":"book","musique":"music","ami":"friend","soleil":"sun","arbre":"tree","fleur":"flower","amour":"love","nourriture":"food"}},{"sourceLanguage":"fr","targetLanguage":"es","phrases":{"bonjour":"hola","au revoir":"adiós","merci":"gracias","chat":"gato","chien":"perro","maison":"casa","pomme":"manzana","voiture":"coche","livre":"libro","musique":"música","ami":"amigo","soleil":"sol","arbre":"árbol","fleur":"flor","amour":"amor","nourriture":"comida"}},{"sourceLanguage":"fr","targetLanguage":"ar","phrases":{"bonjour":"مرحبا","au revoir":"وداعا","merci":"شكرا","chat":"قطة","chien":"كلب","maison":"منزل","pomme":"تفاحة","voiture":"سيارة","livre":"كتاب","musique":"موسيقى","ami":"صديق","soleil":"شمس","arbre":"شجرة","fleur":"زهرة","amour":"حب","nourriture":"طعام"}},{"sourceLanguage":"ar","targetLanguage":"en","phrases":{"مرحبا":"hello","وداعا":"goodbye","شكرا":"thank you","قطة":"cat","كلب":"dog","منزل":"house","تفاحة":"apple","سيارة":"car","كتاب":"book","موسيقى":"music","صديق":"friend","شمس":"sun","شجرة":"tree","زهرة":"flower","حب":"love","طعام":"food"}},{"sourceLanguage":"ar","targetLanguage":"es","phrases":{"مرحبا":"hola","وداعا":"adiós","شكرا":"gracias","قطة":"gato","كلب":"perro","منزل":"casa","تفاحة":"manzana","سيارة":"coche","كتاب":"libro","موسيقى":"música","صديق":"amigo","شمس":"sol","شجرة":"árbol","زهرة":"flor","حب":"amor","طعام":"comida"}},{"sourceLanguage":"ar","targetLanguage":"fr","phrases":{"مرحبا":"bonjour","وداعا":"au revoir","شكرا":"merci","قطة":"chat","كلب":"chien","منزل":"maison","تفاحة":"pomme","سيارة":"voiture","كتاب":"livre","موسيقى":"musique","صديق":"ami","شمس":"soleil","شجرة":"arbre","زهرة":"fleur","حب":"amour","طعام":"nourriture"}}]}'
-        const words = JSON.parse(JSONwords);
         let SourceLang = $('#SourceLang'); // retrive the select list for the source language
         let TargetLang = $('#TargetLang'); // retrive the select list for the source language
 
@@ -92,6 +90,7 @@ $(document).ready(function(){
     let resultState = $('#result-state');
     let showrsult = $('.showResult');
     let showHint = $('.showHint');
+
     const modal = $("#myModal");
 
 
@@ -159,7 +158,6 @@ function CheckAnswer(){
 
 // this function is called whenever the answer is wrong
 function lost(reason, lostReason){
-
     showrsult.css('display','')
     if(attempts == 1){
         $('.placeholder > input').val('') //clear the input
@@ -234,5 +232,4 @@ $(window).on("click", function (event) {
   function closeModal() {
     modal.hide();
   }
-
 }) 
