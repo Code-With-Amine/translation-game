@@ -6,6 +6,7 @@ $(document).ready(function() {
   let userSelectedCategory;
   let phraseInTargetLang;
   let randPhrase;
+  let score = 0;
   let repeatedPhrases = [];
   let rightAnswers = 0;
   let wrongAnswers = 0;
@@ -73,7 +74,7 @@ $(document).ready(function() {
   category.on('change', function() {
     userSelectedCategory = category.val();
     localStorage.setItem('category', userSelectedCategory);
-    window.location.href = "game.html";
+    window.location.href = "userInfo.html";
   });
 
   startTheGame(localStorage.getItem('sourceLang'), localStorage.getItem('targetLang'), localStorage.getItem('category'));
@@ -90,23 +91,33 @@ $(document).ready(function() {
     $('#checkAnswer').prop('disabled', false);
 
     for (let i of translatedWords) {
-      //repeatedPhrases
       if (i.sourceLanguage === source && i.targetLanguage === target && i.category === category) {
         // prevent the phrase from been repeated
         do{
-            convertSourceLangToArray = Object.keys(i.phrases);
-            randIndex = Math.floor(Math.random() * convertSourceLangToArray.length);
-            randPhrase = convertSourceLangToArray[randIndex];
+            if(isGameOver(convertSourceLangToArray, repeatedPhrases)){//check if the game is over or not
+                  clearInterval(interval);
+                  $('#nextBtn').prop('disabled', true);
+                  $('#checkAnswer').prop('disabled', true);
+                  $('#result').click();
+                  showResult.show();
+                  showResult.text('The Game has ended You did well :)')
+                  break;
+            }else
+              {
+                convertSourceLangToArray = Object.keys(i.phrases);
+                randIndex = Math.floor(Math.random() * convertSourceLangToArray.length);
+                randPhrase = convertSourceLangToArray[randIndex];
+              }
 
       }while(repeatedPhrases.includes(randPhrase))
         $('.showSourceLangWord > p').text(randPhrase);
         phraseInTargetLang = i.phrases[randPhrase];
         repeatedPhrases.push(randPhrase);
+        setGameTime();
       }
     }
-
-    setGameTime();
   }
+
 
   function setGameTime() {
     let time = 60;
@@ -133,6 +144,7 @@ $(document).ready(function() {
     }, 1000);
   }
 
+
   function checkAnswer() {
     const userAnswer = $('.placeholder > input').val().toLowerCase();
     if (userAnswer === phraseInTargetLang) {
@@ -146,9 +158,9 @@ $(document).ready(function() {
   function wrongTranslation(reason, lostReason) {
     showResult.css('display', '');
     if (attempts === 1) {
+      clearInterval(interval);
       $('.placeholder > input').val('');
       resultState.html(`${lostReason} <span style="font-size:1.5rem; color:green;">${phraseInTargetLang}</span>`);
-      clearInterval(interval);
       showHint.css('display', '');
       $('#nextBtn').prop('disabled', false);
       $('#checkAnswer').prop('disabled', true);
@@ -170,6 +182,7 @@ $(document).ready(function() {
     $('.showHint > p').text(`You were ${similarityPercentage}% close to the phrase`);
   }
 
+
   function correctAnswer() {
     $('.placeholder > input').val('');
     showResult.css('display', '');
@@ -179,6 +192,7 @@ $(document).ready(function() {
     $('#checkAnswer').prop('disabled', true);
     rightAnswers++;
   }
+
 
   function calculateSimilarityPercentage(targetWord, userInput) {
     var maxLength = Math.max(targetWord.length, userInput.length);
@@ -194,13 +208,47 @@ $(document).ready(function() {
     return similarity.toFixed(2);
   }
 
+
+  //check if the game over
+  function isGameOver(phrases, shownPhrases){
+    try{
+          let over;
+          for(let i of phrases){ // loop through the actulle array that contains the phrases
+            for(let j of shownPhrases){ // loop through the array which contains the phrases which already appeared to the user
+              if(i === j){ // if you found the phrase in both arrays means the game may be over
+                over = true;
+                break;
+              }else{
+                over = false
+              }
+            }
+            if(over === false ){ // if one phrase isn't exsists in the array it means that the game isn't over yet
+              break;
+            }
+          }
+          return over;
+        }catch(err){
+          return false
+        }
+  }
+
+
+  function CalculateScore(Answers, totalQuestions){
+      return Math.round((Answers / totalQuestions)* 100 , 2);
+  }
+
   $('#checkAnswer').on('click', checkAnswer);
 
   $('#nextBtn').on('click', () => startTheGame(localStorage.getItem('sourceLang'), localStorage.getItem('targetLang'), localStorage.getItem('category')));
 
   $('#result').on('click', function() {
     modal.show();
-    $('.modal-content > p').text(`You answered ${rightAnswers} out of ${rightAnswers + wrongAnswers}`);
+    const totalQuestions = rightAnswers + wrongAnswers
+    score = CalculateScore(rightAnswers, totalQuestions)
+    $('.modal-content > h2').html(`<i class="fa-solid fa-user"></i> ${localStorage.getItem('userFirstName')}  ${localStorage.getItem('userLastName')}`)
+    $('.modal-content > p').text(`You answered ${rightAnswers} out of ${totalQuestions}`); // show how many answer are true out of the totalQuestions
+    $('.modal-content > #score').text(`Score: ${score}%`)
+    
   });
 
   $(window).on("click", function(event) {
@@ -208,6 +256,7 @@ $(document).ready(function() {
       closeModal();
     }
   });
+
 
   function closeModal() {
     modal.hide();

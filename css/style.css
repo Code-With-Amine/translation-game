@@ -5,6 +5,12 @@
 a{
     text-decoration: none;
 }
+.warning{
+    background-color: red;
+    color: white;
+    padding: 12px 22px;
+    text-align: center;
+}
 
 body,html{
     padding: 0;
@@ -59,7 +65,8 @@ nav a:hover{
     margin-bottom: 22px;
 }
 
-select{
+select,input{
+    display: block;
     border: blue 3px solid;
     padding: 12px 18px;
     background-color: #fff;
@@ -85,7 +92,7 @@ select{
         border: none;
         padding: 14px 26px;
         color: #fff;
-        background-color: #665E5E;
+        background-color: #040404c6;
         text-align: center;
         display: inline-block;
         margin: 10px 150px;
@@ -213,7 +220,7 @@ button:disabled{
     padding: 20px;
     border: 1px solid #888;
     width: 300px;
-    text-align: center;
+    text-align: justify;
   }
 
   .shadow{
