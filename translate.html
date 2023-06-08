@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>File Text Extractor</title>
+    <link rel="stylesheet" href="css/fileTranslate.css">
+    <script src="https://kit.fontawesome.com/d83f7e2869.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <a href="index.html"><i class="fa-solid fa-house"></i></a>
+    <h1>File Text Extractor</h1>
+    <input type="file" id="file-input" accept=".txt, .csv" onchange="extractTextFromFile(event)">
+    <!-- this input only accept files with .text and .csv extansion -->
+    <label for="file-input">Choose a TXT or CSV file</label> 
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="text-input">
+                <textarea spellcheck="false" class="from-text" placeholder="Enter text"></textarea> <!-- Where the origin text will be wrote down -->
+                <textarea spellcheck="false" readonly disabled class="to-text" placeholder="Translation"></textarea><!-- the translated text will be here -->
+            </div>
+            <ul class="controls">
+                <li class="row from">
+                    <div class="icons">
+                        <i id="from" class="fas fa-volume-up"></i>
+                        <i id="from" class="fas fa-copy"></i>
+                    </div>
+                    <select></select>
+                </li>
+                <li class="exchange"><i class="fas fa-exchange-alt"></i></li> <!-- exchange icon to replace the languages -->
+                <li class="row to">
+                    <select></select>
+                    <div class="icons">
+                        <i id="to" class="fas fa-volume-up"></i>
+                        <i id="to" class="fas fa-copy"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <button>Translate Text</button>
+    </div>
+    <script>
+        const countries = {
+            "am-ET": "Amharic",
+            "ar-SA": "Arabic",
+            "be-BY": "Bielarus",
+            "bem-ZM": "Bemba",
+            "bi-VU": "Bislama",
+            "bjs-BB": "Bajan",
+            "bn-IN": "Bengali",
+            "bo-CN": "Tibetan",
+            "br-FR": "Breton",
+            "bs-BA": "Bosnian",
+            "ca-ES": "Catalan",
+            "cop-EG": "Coptic",
+            "cs-CZ": "Czech",
+            "cy-GB": "Welsh",
+            "da-DK": "Danish",
+            "dz-BT": "Dzongkha",
+            "de-DE": "German",
+            "dv-MV": "Maldivian",
+            "el-GR": "Greek",
+            "en-GB": "English",
+            "es-ES": "Spanish",
+            "et-EE": "Estonian",
+            "eu-ES": "Basque",
+            "fa-IR": "Persian",
+            "fi-FI": "Finnish",
+            "fn-FNG": "Fanagalo",
+            "fo-FO": "Faroese",
+            "fr-FR": "French",
+            "gl-ES": "Galician",
+            "gu-IN": "Gujarati",
+            "ha-NE": "Hausa",
+            "he-IL": "Hebrew",
+            "hi-IN": "Hindi",
+            "hr-HR": "Croatian",
+            "hu-HU": "Hungarian",
+            "id-ID": "Indonesian",
+            "is-IS": "Icelandic",
+            "it-IT": "Italian",
+            "ja-JP": "Japanese",
+            "kk-KZ": "Kazakh",
+            "km-KM": "Khmer",
+            "kn-IN": "Kannada",
+            "ko-KR": "Korean",
+            "ku-TR": "Kurdish",
+            "ky-KG": "Kyrgyz",
+            "la-VA": "Latin",
+            "lo-LA": "Lao",
+            "lv-LV": "Latvian",
+            "men-SL": "Mende",
+            "mg-MG": "Malagasy",
+            "mi-NZ": "Maori",
+            "ms-MY": "Malay",
+            "mt-MT": "Maltese",
+            "my-MM": "Burmese",
+            "ne-NP": "Nepali",
+            "niu-NU": "Niuean",
+            "nl-NL": "Dutch",
+            "no-NO": "Norwegian",
+            "ny-MW": "Nyanja",
+            "ur-PK": "Pakistani",
+            "pau-PW": "Palauan",
+            "pa-IN": "Panjabi",
+            "ps-PK": "Pashto",
+            "pis-SB": "Pijin",
+            "pl-PL": "Polish",
+            "pt-PT": "Portuguese",
+            "rn-BI": "Kirundi",
+            "ro-RO": "Romanian",
+            "ru-RU": "Russian",
+            "sg-CF": "Sango",
+            "si-LK": "Sinhala",
+            "sk-SK": "Slovak",
+            "sm-WS": "Samoan",
+            "sn-ZW": "Shona",
+            "so-SO": "Somali",
+            "sq-AL": "Albanian",
+            "sr-RS": "Serbian",
+            "sv-SE": "Swedish",
+            "sw-SZ": "Swahili",
+            "ta-LK": "Tamil",
+            "te-IN": "Telugu",
+            "tet-TL": "Tetum",
+            "tg-TJ": "Tajik",
+            "th-TH": "Thai",
+            "ti-TI": "Tigrinya",
+            "tk-TM": "Turkmen",
+            "tl-PH": "Tagalog",
+            "tn-BW": "Tswana",
+            "to-TO": "Tongan",
+            "tr-TR": "Turkish",
+            "uk-UA": "Ukrainian",
+            "uz-UZ": "Uzbek",
+            "vi-VN": "Vietnamese",
+            "wo-SN": "Wolof",
+            "xh-ZA": "Xhosa",
+            "yi-YD": "Yiddish",
+            "zu-ZA": "Zulu"
+        }
+        const fromText = document.querySelector(".from-text"), // retrive the textarea on where we will put the text which had come throught the fiel
+            toText = document.querySelector(".to-text"),// retrive the textarea on where we will put the translated text
+            exchageIcon = document.querySelector(".exchange"), // retrive the icon which will change the languages eventually
+            selectTag = document.querySelectorAll("select"), // retrive  a nodeList for all the select lists
+            icons = document.querySelectorAll(".row i"), // retrive a nodeList for the icons
+            translateBtn = document.querySelector("button") // translate button
+
+            // select the english and french as default values in the select list
+            selectTag.forEach((tag, id) => { // for each select list in the html where tag represent the item, and id represent the index,
+                for (let country_code in countries) { // loop throuth the countries 
+                    let selected = id == 0 ? country_code == "en-GB" ? "selected" : "" : country_code == "fr-FR" ? "selected" : "";
+                    let option = `<option ${selected} value="${country_code}">${countries[country_code]}</option>`;
+                    tag.insertAdjacentHTML("beforeend", option);
+                }
+            });
+
+            //switch the languages when the user clicks on exchageIcon
+        exchageIcon.addEventListener("click", () => {
+            let tempText = fromText.value,
+                tempLang = selectTag[0].value;
+            fromText.value = toText.value;
+            toText.value = tempText;
+            selectTag[0].value = selectTag[1].value;
+            selectTag[1].value = tempLang;
+        });
+
+        // when the text is empty in the origin languge it will be empty in the translated language as well 
+        fromText.addEventListener("keyup", () => { 
+            if (!fromText.value) {
+                toText.value = "";
+            }
+        });
+
+        // translate the text when translateBtn is clicked
+        translateBtn.addEventListener("click", () => {
+            let text = fromText.value.trim(),
+                translateFrom = selectTag[0].value,
+                translateTo = selectTag[1].value;
+            if (!text) return; // if there is no text don't do anything quit the function
+            toText.setAttribute("placeholder", "Translating...");
+            let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
+            fetch(apiUrl).then(res => res.json()).then(data => {
+                toText.value = data.responseData.translatedText;
+                data.matches.forEach(data => {
+                    if (data.id === 0) {
+                        toText.value = data.translation;
+                    }
+                });
+                toText.setAttribute("placeholder", "Translation");
+            });
+        });
+
+
+            // Event listeners for icon clicks (audio playback and text copying)
+        icons.forEach(icon => {
+            icon.addEventListener("click", ({ target }) => {
+                if (!fromText.value || !toText.value) return;// if there is no text don't do anything quit the function
+                if (target.classList.contains("fa-copy")) { // if i clicked on the copy icon
+                    if (target.id == "from") {
+                        navigator.clipboard.writeText(fromText.value); // just copy the text in the origin language
+                    } else {
+                        navigator.clipboard.writeText(toText.value); // copy the text in the translated language
+                    }
+                } else {
+                    let utterance;
+                    if (target.id == "from") {
+                        utterance = new SpeechSynthesisUtterance(fromText.value);
+                        utterance.lang = selectTag[0].value;
+                    } else {
+                        utterance = new SpeechSynthesisUtterance(toText.value);
+                        utterance.lang = selectTag[1].value;
+                    }
+                    speechSynthesis.speak(utterance);
+                }
+            });
+        });
+
+
+        // create the functions that  allows the user to upload a csv or txt files 
+        function extractTextFromFile(event) {  // The extractTextFromFile function reads the file content using FileReader and calls the extractText function to extract the text from the file content. The extractText 
+            const file = event.target.files[0]; // retrive the first file of the selected files
+            const fileReader = new FileReader(); //  creates a new instance of the FileReader object, which allows us to read the contents of the file asynchronously.
+
+            fileReader.onload = function (event) { // This code assigns an onload event handler to the fileReader object. The onload event is triggered when the file reading operation is complete.
+                const fileContent = event.target.result; // retrieves the file content as a text string.
+                const extractedText = extractText(fileContent); // The extractText function is called with the fileContent as an argument to extract the text from the file content.
+                displayExtractedText(extractedText);
+            };
+
+            fileReader.readAsText(file); // This line initiates the file reading operation. It reads the contents of the file as a text string using the readAsText method of the FileReader object.
+        }
+
+        function extractText(fileContent) {// This function is responsible for extracting the text from the file content.
+            // Extract text from the file content using your preferred method
+            // For CSV, you might need to split by lines and further process the data
+            // Here's a simple example for extracting text from a TXT file:
+            const text = fileContent.trim();
+            return text;
+        }
+
+        function displayExtractedText(extractedText) {
+            document.querySelector(".from-text").value = extractedText;
+        }
+    </script>
+</body>
+
+</html>

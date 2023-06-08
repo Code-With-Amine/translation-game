@@ -186,7 +186,7 @@ $(document).ready(function() {
   function correctAnswer() {
     $('.placeholder > input').val('');
     showResult.css('display', '');
-    resultState.html('<span style="color:green;font-size:1.5rem">Well done! Your translation of the phrase is correct</span> <img src="images/party-popper.png" class="icon">');
+    resultState.html('<span style="color:green;font-size:1.5rem"><img src="images/wrightAnswer.png" class="icon"> Well done! Your translation of the phrase is correct</span>');
     clearInterval(interval);
     $('#nextBtn').prop('disabled', false);
     $('#checkAnswer').prop('disabled', true);
