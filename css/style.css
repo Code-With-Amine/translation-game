@@ -23,6 +23,7 @@ body,html{
 
 nav {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 42px;
 }
@@ -42,9 +43,16 @@ nav a:hover{
     margin: 30px auto;
     padding-top: 52px;
     display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 42px;
     align-items: center;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 130px;
+
+}
+
+.grid-container > div {
+    align-self: center;
+    justify-self: center;
 }
 
 .grid-container-2{
@@ -242,4 +250,37 @@ button:disabled{
 .gameNav.btn:hover{
     opacity: 0.9;
     background-color: #333;
+}
+
+.toggleNavBtn {
+    display: none;
+    margin-top: 22px;
+}
+
+.display {
+    display: block;
+}
+
+/* Make the website responsive */
+@media screen and (max-width: 800px) {
+    body {
+        font-size: 12px;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav > img,a {
+        display: none;
+    }
+
+    .toggleNavBtn {
+        display: block;
+    }
+
+    a {
+        margin: 5px 0;
+    }
 }
