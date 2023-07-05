@@ -40,14 +40,14 @@ nav a:hover{
 }
 
 .grid-container{
-    max-width: 1000px;
+    max-width: 90%;
     margin: 30px auto;
     padding-top: 52px;
     display: grid;
     align-items: center;
     justify-content: center;
     grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-    gap: 130px;
+    gap: 80px;
 
 }
 
@@ -319,5 +319,12 @@ button:disabled{
 
   .d-flex{
     gap: 22px;
+  }
+  .grid-container > div{
+    max-width: 80%;
+  }
+  .Start-game{
+    max-width: 80%;
+    margin: 0 auto;
   }
 }
