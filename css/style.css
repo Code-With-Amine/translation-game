@@ -13,8 +13,9 @@ a{
 }
 
 body,html{
-    padding: 0;
+    height: 100%;
     margin: 0;
+    padding: 0;
 }
 
 .logo{
@@ -57,30 +58,26 @@ nav a:hover{
 
 .grid-container-2{
     display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 122px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    padding: 30px;
+    height: 100%;
+    width: 100%;
 }
 
 .center-vertically{
-    padding-left: 42px;
-    height: 100vh;
     display: flex;
+    height: 100vh;
+    width: 100%;
     flex-direction: column;
     justify-content: center;
+    align-items: center; 
     text-align: justify;
+    font-size: 1.3rem;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 1.4rem;
-    margin-bottom: 22px;
 }
 
-select,input{
-    display: block;
-    border: blue 3px solid;
-    padding: 12px 18px;
-    background-color: #fff;
-    max-width: 80%;
-    font-size: 1.4rem;
-}
+
 .radius-1{
     border-radius: 12px;
     -webkit-border-radius: 12px;
@@ -108,13 +105,23 @@ select,input{
         font-size: 1rem;
         cursor: pointer;
 }
+
 .Start-game:hover{
     opacity: 0.8;   
+}
+
+.d-flex{
+    display: flex;
+    gap: 142px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .menu{
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 52px;
     margin-top: 12px;
 }
@@ -262,7 +269,7 @@ button:disabled{
 }
 
 /* Make the website responsive */
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
     body {
         font-size: 12px;
     }
@@ -283,4 +290,34 @@ button:disabled{
     a {
         margin: 5px 0;
     }
+
+    /* Making the about page responsive */
+    .grid-container-2{
+        gap: 12px;
+    }
+
+}
+@media screen and (max-width: 700px) {
+
+.center-vertically {
+    align-items: center;
+    text-align: center;
+    margin: 52px 0px;
+  }
+  .placeholder{
+    width: 100%;
+  }
+  .placeholder input{
+    width: 100%;
+  }
+  .showSourceLangWord{
+    gap: 30px;
+  }
+  .showSourceLangWord > img{
+        width: 50px;
+  }
+
+  .d-flex{
+    gap: 22px;
+  }
 }

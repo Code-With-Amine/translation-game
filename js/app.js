@@ -83,6 +83,7 @@ $(document).ready(function() {
     let randIndex;
     let convertSourceLangToArray;
     attempts = 3;
+    let gameOver = false
     $('.placeholder > input').val('');
     showResult.css('display', 'none');
     showHint.css('display', 'none');
@@ -101,6 +102,7 @@ $(document).ready(function() {
                   $('#result').click();
                   showResult.show();
                   showResult.text('The Game has ended You did well :)')
+                  gameOver = true
                   break;
             }else
               {
@@ -110,10 +112,14 @@ $(document).ready(function() {
               }
 
       }while(repeatedPhrases.includes(randPhrase))
+
+      if(!gameOver){
         $('.showSourceLangWord > p').text(randPhrase);
         phraseInTargetLang = i.phrases[randPhrase];
         repeatedPhrases.push(randPhrase);
         setGameTime();
+      }
+
       }
     }
   }
