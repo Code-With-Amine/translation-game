@@ -14,4 +14,9 @@
 <li>Add The possibility to recognise the phrases using audios <q>Voice</q> instead of a text </li>
 </ul>
 <h2>How the website looks and functions on the big scrrens</h2>
+
 <h2>How the website looks and functions on the small scrrens</h2>
+
+<p align='center'>
+	<img src='https://github.com/Code-With-Amine/translation-game/assets/111357726/150347aa-3e67-4ac3-b0ce-5c1a0221209b'/>
+</p>
