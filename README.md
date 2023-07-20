@@ -4,6 +4,7 @@
 <ul>
   <li>The user preferences are stored in the browser's local Storage.</li>
   <li>The phrases are imported from a JSON file The same phrase can't be duplicated.</li>
+  <li>When the user makes a mistake a <strong>Hint appears</strong> specifying the percentage of how was the user close to the phrase.</li>
   <li>The time reinitialize in each new phrase and stops when the user makes a mistake or the game has ended.</li>
 </ul>
 <h2>Possible Features to be Added to the Game</h2>
