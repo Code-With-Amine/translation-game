@@ -10,7 +10,7 @@
 <h2>Possible Features to be Added to the Game</h2>
 <ul>
 <li>Possiblity to play online and compare user's scores with each other</li>
-<li>Add new languages phrases categories</li>
+<li>Add new languages, phrases, categories</li>
 <li>Add The possibility to recognise the phrases using audios <q>Voice</q> instead of a text </li>
 </ul>
 <h2>How the website looks and functions on the big scrrens</h2>
