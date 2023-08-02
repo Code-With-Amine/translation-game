@@ -15,6 +15,11 @@
 </ul>
 <h2>How the website looks and functions on the big scrrens</h2>
 
+
+https://github.com/Code-With-Amine/translation-game/assets/111357726/e949f5d3-fc25-4abe-a02b-6af1962b3a0a
+
+
+
 <h2>How the website looks and functions on the small scrrens</h2>
 
 <p align='center'>
